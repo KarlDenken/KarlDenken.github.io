@@ -4,6 +4,58 @@
   
   
   <entry>
+    <title>Coronavirus and pets - How COVID-19 affects cats and dogs</title>
+    <link href="/2020/04/06/English%20Expression%20Regarding%20COVID-19/"/>
+    <url>/2020/04/06/English%20Expression%20Regarding%20COVID-19/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Coronavirus-and-pets-How-COVID-19-affects-cats-and-dogs"><a href="#Coronavirus-and-pets-How-COVID-19-affects-cats-and-dogs" class="headerlink" title="Coronavirus and pets: How COVID-19 affects cats and dogs"></a>Coronavirus and pets: How COVID-19 affects cats and dogs</h1><p>Coronaviruses have lived and thrived in animals for thousands of years, but only a handful have been known to cause illness in humans. The coronavirus at the center of the current pandemic, SARS-CoV-2, is incredibly successful at spreading from human to human. As of early April — just four months after it was first detected — the virus had infected over 1 million people and spread to over 180 counties.</p><p>It turns out that SARS-CoV-2 can hijack animal cells, too. Scientists believe the disease originated in Chinese horseshoe bats before it jumped into an intermediary animal and, form there, found its way into humans. The virus is able to inject itself into cells by binding to a cell surface protein known as ACE2, which is present in many species of animal.</p><p>Some media reports have shown that the coronavirus can infect our companion animals — and more exotic species like tigers and lions — but cases are rare. It appears that transmission of the disease from human to animal is low, and there’s no reason to think you might catch the disease from a feline friend who has been wandering the neighborhood. The World Health Organization states there is “no evidence that a dog, cat or any pet can transmit COVID-19”.</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>English</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>English</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>开发要求中的那些名词是什么</title>
+    <link href="/2020/04/06/%E5%BC%80%E5%8F%91%E8%A6%81%E6%B1%82%E4%B8%AD%E7%9A%84%E9%82%A3%E4%BA%9B%E5%90%8D%E8%AF%8D%E6%98%AF%E4%BB%80%E4%B9%88/"/>
+    <url>/2020/04/06/%E5%BC%80%E5%8F%91%E8%A6%81%E6%B1%82%E4%B8%AD%E7%9A%84%E9%82%A3%E4%BA%9B%E5%90%8D%E8%AF%8D%E6%98%AF%E4%BB%80%E4%B9%88/</url>
+    
+    <content type="html"><![CDATA[<h1 id="开发面试要求中的那些名词"><a href="#开发面试要求中的那些名词" class="headerlink" title="开发面试要求中的那些名词"></a>开发面试要求中的那些名词</h1><p>又到了一年的面试季，虽然收到新冠肺炎的影响，本次面试很多都是在线上进行，但是面试的难度仍然不减。笔者在投稿时也正在投简历和准备面试的重要节点。然而，现在算法的岗位处于白热化的竞争状态，相信很多读者和笔者一样有转投开发的岗位。可是很多开发岗位的名词尚属第一次听到，所以，这一次我们来了解一些那些可能出现在开发面试要求中的那些名词。</p><h2 id="Spring框架"><a href="#Spring框架" class="headerlink" title="Spring框架"></a>Spring框架</h2><p>在2002年10月，Rod Johnson 在其撰写的 <em>Expert One-on-One J2EE</em> 的书中，提出了一个基于普通Java类和依赖注入的简单组件框架。在书中，他编写了超过 30,000 行的基础结构代码。包含许多可重用的 Java 接口和类。在书发布后不久，开发者 Juergen Hoeller 和 Yann Caroff 说服 Rod Johnson 创建一个基于基础结构代码的开源项目。随后，Rod，Juergen 和 Yann 于 2003 年 2 月左右开始合作开发该项目。Yann 为新框架创造了“Spring”的名字。Spring 框架也就此应运而生。</p><p>Spring 框架用一句话来说，就是 <strong>一个特殊的开发应用框架</strong>，这个框架有着以下几个标签：<code>轻量级</code>，<code>非侵入式</code>，<code>一站式</code>，<code>模块化</code>等特点。在Spring框架内，主要设计到的名词如下：</p><ul><li><p><strong>应用程序</strong>：能完成我们所需要功能的成品，比如购物网站，OA系统，ERP系统等。</p></li><li><p><strong>框架</strong>：是能完成一定功能的半成品。如果我们要来构造一个购物网站，我们可以通过框架进行开发，框架可以提供数据的写入，读取等功能，而我们可以设计一些额外的功能来完成商品的入库、出库等。这些框架提供了基础功能，可以很好的简化开发的流程。</p></li><li><p><strong>非侵入式设计</strong>：在设计中，无需继承框架提供的类，这样的设计，就是非侵入式设计。如果继承了这些框架类，就是侵入式设计。侵入式设计，如果以后想更换框架，之前写的代码就必须重写，如果是非侵入式设计，之前写过的代码可以接着使用。</p></li><li><p><strong>轻量级/重量级</strong>：轻量级是相较于重量级而言的。轻量级一般是非侵入式的，所依赖的东西非常好，占用的资源也非常少，部署简单，容易使用。重量级反之。</p></li><li><p><strong>POJO（Plain Old Java Object）</strong>：简单的Java对象，它可以包含业务逻辑或持久化逻辑，但不担当任何特殊角色且不继承或不实现任何其它Java框架的类或接口。</p></li><li><p><strong>容器</strong>：在日常生活中容器就是一种盛放东西的器具，从程序设计角度看就是装对象的的对象，因为存在放入、拿出等操作，所以容器还要管理对象的生命周期。</p></li><li><p><strong>IOC（Inversion of Control）</strong>：控制反转，又叫做依赖注入，就是由容器控制程序之间的关系，而非传统设计中，由代码直接控制。</p></li><li><p><strong>Bean</strong>：Spring IoC 容器管理对象。</p></li><li><p><strong>AOP</strong>： AOP是Aspect Oriented Programming的缩写，意思是面向切面编程，提供从另一个角度来考虑程序结构以完善面向对象编程（相对于OOP），即可以通过在编译期间、装载期间或运行期间实现在不修改源代码的情况下给程序动态添加功能的一种技术。通俗点说就是把可重用的功能提取出来，然后将这些通用功能在合适的时候织入到应用程序中；比如安全，日记记录，这些都是通用的功能，我们可以把它们提取出来，然后在程序执行的合适地方织入这些代码并执行它们，从而完成需要的功能并复用了这些功能。</p></li></ul><h2 id="Cache"><a href="#Cache" class="headerlink" title="Cache"></a>Cache</h2><p>Cache，也就是 <strong>缓存</strong>，就是将程序或者系统经常要调用的对象存在内存中，使用的时候可以快速调用，不必再去创建新的重复的实例，从而减少系统开销，提高系统效率。</p><p>缓存主要可以分成两大类：</p><ul><li><p><strong>文件缓存</strong>：把数据存储在磁盘上。</p></li><li><p><strong>内存缓存</strong>：实现一个类中静态Map，对这个Map进行常规的增删查。</p></li></ul><h2 id="RPC"><a href="#RPC" class="headerlink" title="RPC"></a>RPC</h2><p>RPC框架，全称Remote Procedure Call Protocal，也就是远程过程调用协议。也就是两台服务器A，B，一个应用部署在服务器A上，想调用B服务器上应用提供的函数/方法，由于不在一个内存空间，不能直接调用，需要通过网络来表达调用的语义和传达调用的数据。</p><h2 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h2><p>JVM是Java Virtual Machine（Java虚拟机）的缩写，JVM是一种用于计算设备的规范，它是一个虚构出来的计算机，是通过在实际的计算机上仿真模拟各种计算机功能来实现的。</p><p>引入Java语言虚拟机后，Java语言在不同平台上运行时不需要重新编译。Java语言使用Java虚拟机屏蔽了与具体平台相关的信息，使得Java语言编译程序只需生成在Java虚拟机上运行的目标代码（字节码），就可以在多种平台上不加修改地运行。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>名词解释</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>面试准备</tag>
+      
+      <tag>名词解释</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>如何在远程使用Jupyter Notebook</title>
     <link href="/2020/04/04/%E5%A6%82%E4%BD%95%E5%9C%A8%E8%BF%9C%E7%A8%8B%E7%BB%88%E7%AB%AF%E4%B8%8A%E4%BD%BF%E7%94%A8jupternoteboook/"/>
     <url>/2020/04/04/%E5%A6%82%E4%BD%95%E5%9C%A8%E8%BF%9C%E7%A8%8B%E7%BB%88%E7%AB%AF%E4%B8%8A%E4%BD%BF%E7%94%A8jupternoteboook/</url>
