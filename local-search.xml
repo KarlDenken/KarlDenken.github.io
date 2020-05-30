@@ -4,6 +4,58 @@
   
   
   <entry>
+    <title>hash 文件在macOS上的验证</title>
+    <link href="/2020/05/30/Hash%20%E6%96%87%E4%BB%B6/"/>
+    <url>/2020/05/30/Hash%20%E6%96%87%E4%BB%B6/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Hash-文件"><a href="#Hash-文件" class="headerlink" title="Hash 文件"></a>Hash 文件</h1><p>当我们从网络上下载得到一个文件，尤其是一个大文件时，，你会不会常常发现这一个一个问题：<strong>文件打不开</strong>！你会不会疑惑，明明从网上下载的文件好好的，怎么会出现文件错误，打不开呢？</p><h2 id="文件的完整性"><a href="#文件的完整性" class="headerlink" title="文件的完整性"></a>文件的完整性</h2><p>我们提到文件，尤其是大文件的下载的时候，我们常常会提到 <strong>P2P</strong> 或者是 <strong>磁力链</strong>。</p><ul><li><strong>P2P</strong>：P2P，也就是Peer-to-Peer的简称。以这种协议传输，每个电脑都会提供一份力量。文件被分成很多个小块，每台电脑都会提供一部分小块的上传和下载。</li></ul><p><img src="/assets/OIP.MoRYiSMe1GqCA9tLYZ3kYAHaFj.jpeg" srcset="/img/loading.gif" alt="P2P network"></p><ul><li><strong>磁力链</strong>：磁力链和P2P类似，但是P2P需要一个中心服务器来告诉各个电脑有谁有文件，而磁力链则会自动找最近的有文件的服务器。</li></ul><p>这两种方式都有一个问题，那就是文件被分割成小块在互联网上传输。如果其中一块出了问题，那整个文件都不可是使用了。所以我们需要一个方法来验证文件的完整度。</p><blockquote><p>目前主流下载软件是已经包含了验证文件完整度的流程的，不需要再次验证</p></blockquote><h2 id="Hash（哈希）"><a href="#Hash（哈希）" class="headerlink" title="Hash（哈希）"></a>Hash（哈希）</h2><p>hash本质上就是一个函数，他的输入是一串二进制，输出为一串字符。我们就称呼这串字符为 <strong>文件哈希(file hash)</strong> 或者 <strong>验证符(checksums)</strong>。一个理想的hash函数应该满足独一性，即每个独特的文件只能产生一个文件哈希，以至于任何一个微小的改变都会改变文件哈希的值。</p><p>目前有很多的hash算法，包括<code>SHA-256</code>，<code>SHA3</code>，<code>SHA1</code>，<code>MD5</code>和<code>CRC32</code>。但是目前这些算法都不是绝对安全的（也就是说，有可能两个文件会产生同样的哈希），不过在日常生活中他们已经常用来验证文件的完整性。</p><p>这里不对各个Hash算法的原理进行深入研究，如果有需求可以看看<a href="https://zhuanlan.zhihu.com/p/37165658" target="_blank" rel="noopener">知乎专栏</a>进行了解。</p><h2 id="在mac上验证文件Hash"><a href="#在mac上验证文件Hash" class="headerlink" title="在mac上验证文件Hash"></a>在mac上验证文件Hash</h2><p>mac目前提供命令行指令来看文件的hash值：</p><ul><li><p>显示SHA256哈希：<code>shasum -a 256 [filenames]</code></p></li><li><p>显示SHA1哈希：<code>shasum -a 1 [filenames]</code></p></li><li><p>显示MD5哈希：<code>md5 -r [filenames]</code></p></li><li><p>显示CRC32哈希：<code>crc32 [filenames]</code></p></li></ul><p>有时候我们下载时会提供包含hash的验证文件。我们称呼这些文件为验证文件（checksums files）。一个验证文件（checksums file）一般包含多行hash-文件名对。你可以用一行指令轻松的验证所包含的所有文件。当有多个文件时，这个指令很管用。</p><blockquote><p>注意：验证文件必须与内部提到的文件在同一个文件夹</p></blockquote><ul><li><p>验证SHA256文件（通常文件名是 SHA256SUMS）：<code>shasum -a 256 -c [SHA256SUMS]</code></p></li><li><p>验证SHA1文件（通常文件名是 SHA1SUMS）：<code>shasum -a 1 -c [SHA1SUMS]</code></p></li></ul><p>mac不提供原生的MD5验证指令，但可以从<code>Homebrew</code>轻松下载：</p><p><code>brew install md5sha1sum</code></p><ul><li>验证MD5文件（通常文件名是 MD5SUMS）：<code>md5sum -c [MD5SUMS]</code></li></ul><h2 id="创建验证文件"><a href="#创建验证文件" class="headerlink" title="创建验证文件"></a>创建验证文件</h2><p>我们也可以生成自己的验证文件，可以用于日后的验证或者拷贝大型文件的完整性验证</p><p><code>shasum -a 256 [files] &gt; [SHA256SUMS]</code></p><blockquote><p>注意：SHA256对大型文件的处理速度比较慢，需要耐心等待</p></blockquote><p><img src="/assets/%E6%88%AA%E5%B1%8F2020-05-30%2015.16.00.png" srcset="/img/loading.gif" alt="截屏2020-05-30 15.16.00"></p><h2 id="日常使用"><a href="#日常使用" class="headerlink" title="日常使用"></a>日常使用</h2><p>在一些文件下载网站，如<a href="https://msdn.itellyou.cn" target="_blank" rel="noopener">MSDN</a>，里面的软件是会提供下载后验证SHA1的，我们可以下载之后验证文件的完整性。</p><p><img src="/assets/%E6%88%AA%E5%B1%8F2020-05-30%2015.21.56.png" srcset="/img/loading.gif" alt="截屏2020-05-30 15.21.56"></p><p>同时，有时候路边购买的U盘，也可能出现信息丢失的情况，我们也可以用这种方式验证文件完整性。</p><p>另外，对于大型的文档，我们在确定终稿的时候生成SHA文件，可以避免对文件的修改过于细微而无法确认文件的完备性。当然，最好还是用Git进行版本管理。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>小技巧</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Linux</tag>
+      
+      <tag>macOS</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>动态规划</title>
+    <link href="/2020/05/28/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"/>
+    <url>/2020/05/28/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    <categories>
+      
+      <category>算法导论</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>算法</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>背包问题</title>
     <link href="/2020/05/27/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/"/>
     <url>/2020/05/27/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/</url>

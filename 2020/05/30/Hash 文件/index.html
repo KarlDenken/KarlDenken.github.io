@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="危楼高百尺，手可摘星辰">
+  <meta name="author" content="Karl">
+  <meta name="keywords" content="">
+  <title>hash 文件在macOS上的验证 - Karl的A78654星云</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Karl的A78654星云</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期六, 五月 30日 2020, 2:19 下午
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    1k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      3 分钟
+                  </span>
+                
+
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <h1 id="Hash-文件"><a href="#Hash-文件" class="headerlink" title="Hash 文件"></a>Hash 文件</h1><p>当我们从网络上下载得到一个文件，尤其是一个大文件时，，你会不会常常发现这一个一个问题：<strong>文件打不开</strong>！你会不会疑惑，明明从网上下载的文件好好的，怎么会出现文件错误，打不开呢？</p>
+<h2 id="文件的完整性"><a href="#文件的完整性" class="headerlink" title="文件的完整性"></a>文件的完整性</h2><p>我们提到文件，尤其是大文件的下载的时候，我们常常会提到 <strong>P2P</strong> 或者是 <strong>磁力链</strong>。</p>
+<ul>
+<li><strong>P2P</strong>：P2P，也就是Peer-to-Peer的简称。以这种协议传输，每个电脑都会提供一份力量。文件被分成很多个小块，每台电脑都会提供一部分小块的上传和下载。</li>
+</ul>
+<p><img src="/assets/OIP.MoRYiSMe1GqCA9tLYZ3kYAHaFj.jpeg" srcset="/img/loading.gif" alt="P2P network"></p>
+<ul>
+<li><strong>磁力链</strong>：磁力链和P2P类似，但是P2P需要一个中心服务器来告诉各个电脑有谁有文件，而磁力链则会自动找最近的有文件的服务器。</li>
+</ul>
+<p>这两种方式都有一个问题，那就是文件被分割成小块在互联网上传输。如果其中一块出了问题，那整个文件都不可是使用了。所以我们需要一个方法来验证文件的完整度。</p>
+<blockquote>
+<p>目前主流下载软件是已经包含了验证文件完整度的流程的，不需要再次验证</p>
+</blockquote>
+<h2 id="Hash（哈希）"><a href="#Hash（哈希）" class="headerlink" title="Hash（哈希）"></a>Hash（哈希）</h2><p>hash本质上就是一个函数，他的输入是一串二进制，输出为一串字符。我们就称呼这串字符为 <strong>文件哈希(file hash)</strong> 或者 <strong>验证符(checksums)</strong>。一个理想的hash函数应该满足独一性，即每个独特的文件只能产生一个文件哈希，以至于任何一个微小的改变都会改变文件哈希的值。</p>
+<p>目前有很多的hash算法，包括<code>SHA-256</code>，<code>SHA3</code>，<code>SHA1</code>，<code>MD5</code>和<code>CRC32</code>。但是目前这些算法都不是绝对安全的（也就是说，有可能两个文件会产生同样的哈希），不过在日常生活中他们已经常用来验证文件的完整性。</p>
+<p>这里不对各个Hash算法的原理进行深入研究，如果有需求可以看看<a href="https://zhuanlan.zhihu.com/p/37165658" target="_blank" rel="noopener">知乎专栏</a>进行了解。</p>
+<h2 id="在mac上验证文件Hash"><a href="#在mac上验证文件Hash" class="headerlink" title="在mac上验证文件Hash"></a>在mac上验证文件Hash</h2><p>mac目前提供命令行指令来看文件的hash值：</p>
+<ul>
+<li><p>显示SHA256哈希：<code>shasum -a 256 [filenames]</code></p>
+</li>
+<li><p>显示SHA1哈希：<code>shasum -a 1 [filenames]</code></p>
+</li>
+<li><p>显示MD5哈希：<code>md5 -r [filenames]</code></p>
+</li>
+<li><p>显示CRC32哈希：<code>crc32 [filenames]</code></p>
+</li>
+</ul>
+<p>有时候我们下载时会提供包含hash的验证文件。我们称呼这些文件为验证文件（checksums files）。一个验证文件（checksums file）一般包含多行hash-文件名对。你可以用一行指令轻松的验证所包含的所有文件。当有多个文件时，这个指令很管用。</p>
+<blockquote>
+<p>注意：验证文件必须与内部提到的文件在同一个文件夹</p>
+</blockquote>
+<ul>
+<li><p>验证SHA256文件（通常文件名是 SHA256SUMS）：<code>shasum -a 256 -c [SHA256SUMS]</code></p>
+</li>
+<li><p>验证SHA1文件（通常文件名是 SHA1SUMS）：<code>shasum -a 1 -c [SHA1SUMS]</code></p>
+</li>
+</ul>
+<p>mac不提供原生的MD5验证指令，但可以从<code>Homebrew</code>轻松下载：</p>
+<p><code>brew install md5sha1sum</code></p>
+<ul>
+<li>验证MD5文件（通常文件名是 MD5SUMS）：<code>md5sum -c [MD5SUMS]</code></li>
+</ul>
+<h2 id="创建验证文件"><a href="#创建验证文件" class="headerlink" title="创建验证文件"></a>创建验证文件</h2><p>我们也可以生成自己的验证文件，可以用于日后的验证或者拷贝大型文件的完整性验证</p>
+<p><code>shasum -a 256 [files] &gt; [SHA256SUMS]</code></p>
+<blockquote>
+<p>注意：SHA256对大型文件的处理速度比较慢，需要耐心等待</p>
+</blockquote>
+<p><img src="/assets/%E6%88%AA%E5%B1%8F2020-05-30%2015.16.00.png" srcset="/img/loading.gif" alt="截屏2020-05-30 15.16.00"></p>
+<h2 id="日常使用"><a href="#日常使用" class="headerlink" title="日常使用"></a>日常使用</h2><p>在一些文件下载网站，如<a href="https://msdn.itellyou.cn" target="_blank" rel="noopener">MSDN</a>，里面的软件是会提供下载后验证SHA1的，我们可以下载之后验证文件的完整性。</p>
+<p><img src="/assets/%E6%88%AA%E5%B1%8F2020-05-30%2015.21.56.png" srcset="/img/loading.gif" alt="截屏2020-05-30 15.21.56"></p>
+<p>同时，有时候路边购买的U盘，也可能出现信息丢失的情况，我们也可以用这种方式验证文件完整性。</p>
+<p>另外，对于大型的文档，我们在确定终稿的时候生成SHA文件，可以避免对文件的修改过于细微而无法确认文件的完备性。当然，最好还是用Git进行版本管理。</p>
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%B0%8F%E6%8A%80%E5%B7%A7/">小技巧</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+                  <span>
+                <i class="iconfont icon-tag"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Linux/">Linux</a>
+                    
+                      <a class="hover-with-bg" href="/tags/macOS/">macOS</a>
+                    
+                  </span>
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2020/05/28/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
+                        <span class="hidden-mobile">动态规划</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="fa fa-chevron-right"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+      var tocLimMax = 2 * boardTop + boardCtn.height();
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = boardCtn.css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "hash 文件在macOS上的验证&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
