@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="危楼高百尺，手可摘星辰">
+  <meta name="author" content="Karl">
+  <meta name="keywords" content="">
+  <title>Python单元测试 - Karl的A78654星云</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Karl的A78654星云</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期二, 六月 30日 2020, 8:12 晚上
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    1.9k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      8 分钟
+                  </span>
+                
+
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <h1 id="Python单元测试"><a href="#Python单元测试" class="headerlink" title="Python单元测试"></a>Python单元测试</h1><p>在Python中，利用自带的单元测试框架<code>unittest</code>模块，可以很好的做单元测试。在实际开发环境里，先写好单元测试，确定好边界条件，可以很好的对写好的程序做调试。</p>
+<h2 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h2><p>unittest是xUnit系列框架中的一员，其中最核心的四个概念是：</p>
+<ul>
+<li><strong>testcast</strong><br>一个TestCase实例就是一个测试用例，也就是一个完整的测试流程，包括测试前环境的准备（SetUp），执行测试代码（Run），以及测试后环境的还原（TearDown）。一个测试用例就是一个完整的测试单元，通过运行这个测试单元，可以对某一个问题进行验证</li>
+</ul>
+<ul>
+<li><strong>testsuite</strong><br>多个测试用例放在一起就是TestSuite。TestSuite之间也可以嵌套</li>
+</ul>
+<ul>
+<li><p><strong>testrunner</strong><br>TestRunner就是用来执行测试用例。并且将结果输出到TestResult，包括执行了多少次测试，成功了多少，失败了多少等信息</p>
+</li>
+<li><p><strong>testfixture</strong><br>对一个测试环境的搭建和销毁</p>
+</li>
+</ul>
+<p>所以工作流程如下：<br><strong>写好TestCast -&gt; TestLoader加载TestCase到TestSuite -&gt; TestRunner运行 -&gt; 结果保存在TestResult</strong></p>
+<h2 id="unittest实例"><a href="#unittest实例" class="headerlink" title="unittest实例"></a>unittest实例</h2><p>我们先准备一些待测的方法</p>
+<p><strong>mathfunc.py</strong></p>
+<pre><code class="python">def add(a, b):
+  return a + b
+
+def minus(a, b):
+  return a - b
+
+def multi(a, b):
+  return a * b
+
+def divide(a, b):
+  return a // b</code></pre>
+<p>接下来我们来写一个测试</p>
+<p><strong>test_mathfunc.py</strong></p>
+<pre><code class="Python">import unittest
+from mathfunc import *
+
+class TestMathFunc(unittest.TestCase):
+  &quot;&quot;&quot;Test mathfunc.py&quot;&quot;&quot;
+
+  def test_add(self):
+    &quot;&quot;&quot;Test method add(a, b)&quot;&quot;&quot;
+    self.assertEqual(3, add(1, 2))
+    self.assertNotEqual(3, add(2, 2))
+
+  def test_minus(self):
+    &quot;&quot;&quot;Test method minus(a, b)&quot;&quot;&quot;
+    self.assertEqual(1, minus(3, 2))
+
+  def test_multi(self):
+    &quot;&quot;&quot;Test method multi(a, b)&quot;&quot;&quot;
+    self.assertEqual(6, multi(2, 3))
+
+  def test_divide(self):
+    &quot;&quot;&quot;Test method divide(a, b)&quot;&quot;&quot;
+    self.assertEqual(2, divide(6, 3))
+    self.assertEqual(2.5, divide(5, 2))
+
+
+if __name__ == &#39;__main__&#39;:
+  unittest.main()</code></pre>
+<p><img src="/2020/06/30/Python%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/TestDemo.png" srcset="/img/loading.gif" alt="截屏2020-07-01 19.16.45"></p>
+<p>能够看到一共运行了4个测试，失败了1个，并且给出了失败原因，2.5 != 2 也就是说我们的divide方法是有问题的。</p>
+<p>这就是一个简单的测试，有几点需要说明的：</p>
+<ul>
+<li><p>在第一行给出了每一个用例执行的结果的标识，成功是 .，失败是 F，出错是 E，跳过是 S。从上面也可以看出，测试的执行跟方法的顺序没有关系，test_divide写在了第4个，但是却是第2个执行的。</p>
+</li>
+<li><p>每个测试方法均以 test 开头，否则是不被unittest识别的。</p>
+</li>
+<li><p>在unittest.main()中加 verbosity 参数可以控制输出的错误报告的详细程度，默认是 1，如果设为 0，则不输出每一用例的执行结果，即没有上面的结果中的第1行；如果设为 2，则输出详细的执行结果，如下<br><img src="/2020/06/30/Python%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/TestDemo2.png" srcset="/img/loading.gif" alt="截屏2020-07-01 19.22.50"></p>
+</li>
+</ul>
+<blockquote>
+<p>常见的assert</p>
+<ul>
+<li>assertEqual(a, b) # a = b</li>
+<li>assertNotEqual(a, b) # a != b</li>
+<li>assertTrue(a) # bool(a) is true</li>
+<li>assertFalse(a) # bool(a) if false</li>
+<li>assertIsNone(x) # x is none</li>
+<li>assertIsNotNone(x) # x is not none</li>
+<li>assertIn(a, b) # a in b</li>
+<li>assertNotIn(a, b) # a not in b </li>
+</ul>
+</blockquote>
+<p>可以看到，每一个用例的详细执行情况以及用例名，用例描述均被输出了出来（在测试方法下加代码示例中的”“”Doc String”“”，在用例执行时，会将该字符串作为此用例的描述，加合适的注释能够使输出的测试报告更加便于阅读）</p>
+<h2 id="TestSuite实例"><a href="#TestSuite实例" class="headerlink" title="TestSuite实例"></a>TestSuite实例</h2><p>上面的代码示例了如何编写一个简单的测试，但有两个问题，我们怎么控制用例执行的顺序呢？（这里的示例中的几个测试方法并没有一定关系，但之后你写的用例可能会有先后关系，需要先执行方法A，再执行方法B），我们就要用到TestSuite了。我们添加到TestSuite中的case是会按照添加的顺序执行的。</p>
+<p>问题二是我们现在只有一个测试文件，我们直接执行该文件即可，但如果有多个测试文件，怎么进行组织，总不能一个个文件执行吧，答案也在TestSuite中。</p>
+<p>在文件夹中我们再新建一个文件，<strong>test_suite.py</strong>：</p>
+<pre><code class="Python">import unittest
+from testMathFunc import TestMathFunc
+
+if __name__ == &#39;__main__&#39;:
+    suite = unittest.TestSuite()
+
+    tests = [TestMathFunc(&quot;test_add&quot;), TestMathFunc(&quot;test_minus&quot;), TestMathFunc(&quot;test_divide&quot;)]
+    suite.addTests(tests)
+
+    runner = unittest.TextTestRunner(verbosity=2)
+    runner.run(suite)</code></pre>
+<p><img src="/2020/06/30/Python%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/TestDemo3.png" srcset="/img/loading.gif" alt="截屏2020-07-01 19.29.51"></p>
+<p>可以看到，执行情况跟我们预料的一样：执行了三个case，并且顺序是按照我们添加进suite的顺序执行的。</p>
+<p>上面用了TestSuite的 <code>addTests()</code> 方法，并直接传入了TestCase列表，我们还可以：</p>
+<pre><code class="python"># 直接用addTest方法添加单个TestCase
+suite.addTest(TestMathFunc(&quot;test_multi&quot;))
+
+# 用addTests + TestLoader
+# loadTestsFromName()，传入&#39;模块名.TestCase名&#39;
+suite.addTests(unittest.TestLoader().loadTestsFromName(&#39;test_mathfunc.TestMathFunc&#39;))
+suite.addTests(unittest.TestLoader().loadTestsFromNames([&#39;test_mathfunc.TestMathFunc&#39;]))  # loadTestsFromNames()，类似，传入列表
+
+# loadTestsFromTestCase()，传入TestCase</code></pre>
+<p>注意，用TestLoader的方法是无法对case进行排序的，同时，suite中也可以套suite。</p>
+<h2 id="将结果输出到文件中"><a href="#将结果输出到文件中" class="headerlink" title="将结果输出到文件中"></a>将结果输出到文件中</h2><p>用例组织好了，但结果只能输出到控制台，这样没有办法查看之前的执行记录，我们想将结果输出到文件。很简单，看示例：</p>
+<p>修改 <strong>test_suite.py</strong>:</p>
+<pre><code class="python">mport unittest
+from testMathFunc import TestMathFunc
+
+if __name__ == &#39;__main__&#39;:
+    suite = unittest.TestSuite()
+    suite.addTests(unittest.TestLoader().loadTestsFromTestCase(TestMathFunc))
+
+    with open(&#39;UnittestTextReport.txt&#39;, &#39;a&#39;) as f:
+        runner = unittest.TextTestRunner(stream=f, verbosity=2)
+        runner.run(suite)</code></pre>
+<p>执行此文件，可以看到，在同目录下生成了UnittestTextReport.txt，所有的执行报告均输出到了此文件中，这下我们便有了txt格式的测试报告了。</p>
+<h2 id="testFixture"><a href="#testFixture" class="headerlink" title="testFixture"></a>testFixture</h2><p>上面整个测试基本跑了下来，但可能会遇到点特殊的情况：如果我的测试需要在每次执行之前准备环境，或者在每次执行完之后需要进行一些清理怎么办？比如执行前需要连接数据库，执行完成之后需要还原数据、断开连接。总不能每个测试方法中都添加准备环境、清理环境的代码吧。</p>
+<p>这就要涉及到我们之前说过的test fixture了，修改 <strong>test_mathfunc.py</strong></p>
+<pre><code class="Python">mport unittest
+from mathfunc import *
+
+
+class TestMathFunc(unittest.TestCase):
+    &quot;&quot;&quot;Test mathfuc.py&quot;&quot;&quot;
+
+    def setUp(self):
+        print &quot;do something before test.Prepare environment.&quot;
+
+    def tearDown(self):
+        print &quot;do something after test.Clean up.&quot;
+
+    def test_add(self):
+        &quot;&quot;&quot;Test method add(a, b)&quot;&quot;&quot;
+        print &quot;add&quot;
+        self.assertEqual(3, add(1, 2))
+        self.assertNotEqual(3, add(2, 2))
+    ... ...</code></pre>
+<p>我们添加了 <code>setUp()</code> 和 <code>tearDown()</code> 两个方法（其实是重写了TestCase的这两个方法），这两个方法在每个测试方法执行前以及执行后执行一次，setUp用来为测试准备环境，tearDown用来清理环境，已备之后的测试。</p>
+<p><img src="/2020/06/30/Python%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/TestDemo4.png" srcset="/img/loading.gif" alt="截屏2020-07-01 19.40.33"></p>
+<p>如果想要在所有case执行之前准备一次环境，并在所有case执行结束之后再清理环境，我们可以用 <code>setUpClass()</code> 与 <code>tearDownClass()</code>:</p>
+<pre><code class="python">...
+
+class TestMathFunc(unittest.TestCase):
+    &quot;&quot;&quot;Test mathfuc.py&quot;&quot;&quot;
+
+    @classmethod
+    def setUpClass(cls):
+        print &quot;This setUpClass() method only called once.&quot;
+
+    @classmethod
+    def tearDownClass(cls):
+        print &quot;This tearDownClass() method only called once too.&quot;
+
+...</code></pre>
+<h2 id="跳过某个case"><a href="#跳过某个case" class="headerlink" title="跳过某个case"></a>跳过某个case</h2><p>如果我们临时想要跳过某个case不执行怎么办？unittest也提供了几种方法：</p>
+<ul>
+<li><p>skip装饰器:<br>skip装饰器一共有三个</p>
+<ul>
+<li><p><code>unittest.skip(reason)</code>：无条件跳过</p>
+</li>
+<li><p><code>unittest.skipIp(condition, reason)</code>：condtion为True跳过</p>
+</li>
+<li><p><code>unittest.skilUnless(condition, reason)</code>：condition为False跳过</p>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code class="Python">...
+class TestMathFunc(unittest.TestCase):
+    &quot;&quot;&quot;Test mathfuc.py&quot;&quot;&quot;
+
+    ...
+
+    @unittest.skip(&quot;I don&#39;t want to run this case.&quot;)
+    def test_divide(self):
+        &quot;&quot;&quot;Test method divide(a, b)&quot;&quot;&quot;
+        self.assertEqual(2, divide(6, 3))
+        self.assertEqual(2.5, divide(5, 2))
+...</code></pre>
+<ul>
+<li><code>TestCase.skipTest()</code>方法</li>
+</ul>
+<pre><code class="Python">...
+
+class TestMathFunc(unittest.TestCase):
+    &quot;&quot;&quot;Test mathfuc.py&quot;&quot;&quot;
+
+    ...
+
+    def test_divide(self):
+        &quot;&quot;&quot;Test method divide(a, b)&quot;&quot;&quot;
+        self.skipTest(&#39;Do not run this.&#39;)
+        self.assertEqual(2, divide(6, 3))
+        self.assertEqual(2.5, divide(5, 2))</code></pre>
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                
+                  <span>
+                <i class="iconfont icon-tag"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%B0%8F%E6%8A%80%E5%B7%A7/">小技巧</a>
+                    
+                  </span>
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2020/06/30/Python%E8%AF%AD%E6%B3%95%E8%A7%84%E8%8C%83/">
+                        <span class="hidden-mobile">Python语法规范</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="fa fa-chevron-right"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+      var tocLimMax = 2 * boardTop + boardCtn.height();
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = boardCtn.css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Python单元测试&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="危楼高百尺，手可摘星辰">
+  <meta name="author" content="Karl">
+  <meta name="keywords" content="">
+  <title>Python语法规范 - Karl的A78654星云</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Karl的A78654星云</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期二, 六月 30日 2020, 5:38 下午
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    1.9k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      7 分钟
+                  </span>
+                
+
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <h1 id="Python代码规范"><a href="#Python代码规范" class="headerlink" title="Python代码规范"></a>Python代码规范</h1><p>Python已经成为了越来越热门的编程语言。其由于自身的简单易学的特性收到了很多人的喜爱。不过作为一门脚本语言，Python也有着自己的代码规范。符合规范的使用Python代码，不仅可以提升代码的易读性，维护起来也更加方便。下面就让我们来看看吧。</p>
+<blockquote>
+<p>下面的内容均以Python 3版本为基础。Python已经结束了对2.x版本的支持，建议使用3.x版本学习</p>
+</blockquote>
+<h2 id="基础概述"><a href="#基础概述" class="headerlink" title="基础概述"></a>基础概述</h2><h3 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h3><ul>
+<li>如无特殊情况，文件一律使用UTF-8编码，可以在IDE中自行设置</li>
+</ul>
+<h2 id="代码格式"><a href="#代码格式" class="headerlink" title="代码格式"></a>代码格式</h2><h3 id="缩进"><a href="#缩进" class="headerlink" title="缩进"></a>缩进</h3><ul>
+<li>统一使用4个空格进行缩进。不要使用Tab，如果是IDE可以将Tab软设置成4个空格。</li>
+</ul>
+<h3 id="行宽"><a href="#行宽" class="headerlink" title="行宽"></a>行宽</h3><p>每行代码最好不超过80个字符，这样可以：</p>
+<ul>
+<li><p>查看diff时很有帮助</p>
+</li>
+<li><p>方便控制台下看代码</p>
+</li>
+</ul>
+<h3 id="引号"><a href="#引号" class="headerlink" title="引号"></a>引号</h3><p><strong>自然语言使用双引号，机器标示使用单引号</strong></p>
+<ul>
+<li><p>自然语言使用双引号 “”，比如字符串<code>&quot;你好吗？&quot;</code></p>
+</li>
+<li><p>机器标示使用单引号，比如 <code>dict[&#39;key&#39;]</code>，这里的key不是一个自然语言，而是一个机器标示。对于字符和字符串而言，需要区分标示和自然语言。大多是情况下，都是机器标示，一句有意义的话才是自然语言，常用来做一些交互</p>
+</li>
+<li><p>文档字符串用三个双引号 “””…”””</p>
+</li>
+</ul>
+<h3 id="空行"><a href="#空行" class="headerlink" title="空行"></a>空行</h3><ul>
+<li><p>模块级函数与类定义之间空两行</p>
+</li>
+<li><p>类成员函数之间空一行</p>
+</li>
+<li><p>函数内部不同的功能区空一行，最好在功能区之前用注释标明所做的功能</p>
+</li>
+</ul>
+<pre><code class="Python">class A:
+
+  def __init__(self):
+    pass
+
+  def hello(self):
+    pass
+
+
+def main():
+  pass</code></pre>
+<h2 id="Import"><a href="#Import" class="headerlink" title="Import"></a>Import</h2><ul>
+<li>import语句应该分行书写</li>
+</ul>
+<pre><code class="Python"># Correct
+import os
+import sys
+from subprocess import Popen, PIPE
+
+# Not recommended
+import sys, os</code></pre>
+<ul>
+<li>import语句要使用绝对路径</li>
+</ul>
+<pre><code class="Python"># Correct
+from foo.bar import Bar
+
+# Not recommended
+from ..bar import Bar</code></pre>
+<ul>
+<li><p>import语句应该放在文件头部，至于模块说明和docstring之后，全局变量之前</p>
+</li>
+<li><p>import语句应该按照顺序排列，每组之间用一个空行分离</p>
+</li>
+</ul>
+<pre><code class="Python">import os
+import sys
+
+import msgpack
+import zmq
+
+import foo</code></pre>
+<ul>
+<li><p>导入其他模块的类定义时，可以使用相对导入</p>
+</li>
+<li><p>如果发生命名冲突，可以使用命名空间</p>
+</li>
+</ul>
+<h2 id="空格"><a href="#空格" class="headerlink" title="空格"></a>空格</h2><ul>
+<li>在二元运算符两边各空一格[=,-,+=,==,&gt;,in,is not, and]</li>
+</ul>
+<pre><code class="Python"># Correct
+i = i + 1
+submitted += 1
+x = x * 2 - 1
+x = (a + b) * (a - b)
+
+# Not recommended
+i=i+1
+submitted +=1
+x = x*2 -1</code></pre>
+<ul>
+<li>函数的参数列表中的“，：”之后要有空格，之前不需要</li>
+</ul>
+<pre><code class="Python"># Correct
+def complex(real, imag):
+  pass
+
+# Not recommended
+def complex( real,imag):
+  pass</code></pre>
+<ul>
+<li>函数的参数列表中，默认值等号两边不要添加空格</li>
+</ul>
+<pre><code class="Python"># Correct
+def complex(real, imag=0.0):
+  pass
+
+# not recommended
+def complex(real, imag = 0.0):
+  pass</code></pre>
+<ul>
+<li>左括号之后，右括号之前不要添加不必要的空格</li>
+</ul>
+<pre><code class="Python"># Correct
+spam(ham[1], {egg: 2})
+
+# Not recommended
+sapm( ham[1], { eggs : 2} )</code></pre>
+<ul>
+<li>字典对象的括号之前不要多余的空格</li>
+</ul>
+<pre><code class="Python"># Corrent
+dict[&#39;key&#39;] = list[index]
+
+# not recommended
+dict [&#39;key&#39;] = list [index]</code></pre>
+<ul>
+<li>不要为了对齐而使用额外的空格</li>
+</ul>
+<pre><code class="Python"># Correct
+x = 1
+y = 2
+long_var = 3
+
+# Not recommended
+x        = 1
+y        = 2
+long_var = 3</code></pre>
+<h2 id="换行"><a href="#换行" class="headerlink" title="换行"></a>换行</h2><p>Python支持括号内的换行，此时有两种情况</p>
+<ul>
+<li>第二行缩进到括号起始处</li>
+</ul>
+<pre><code class="Python">foo = long_func_name(var_one, var_two,
+                     var_three, var_four)</code></pre>
+<ul>
+<li>第二行缩进四个空格，适用于起始括号就换行的情形</li>
+</ul>
+<pre><code class="Python">def long_func_name(
+    var_one, var_two, var_three,
+    var_four):
+  print(var_one)</code></pre>
+<ul>
+<li>使用反斜杠换行，二元运算符应该在行末</li>
+</ul>
+<pre><code class="Python">session.query(myTable).\
+        filter_by(id=1).\
+        one()</code></pre>
+<ul>
+<li><p>不推荐复合语句</p>
+</li>
+<li><p>if/for/while 最好换行</p>
+</li>
+</ul>
+<pre><code class="Python"># Corrent
+if foo == &#39;blah&#39;:
+  do_something()
+
+# Not recommended
+if foo == &#39;blah&#39;: do_something()</code></pre>
+<h2 id="docstring"><a href="#docstring" class="headerlink" title="docstring"></a>docstring</h2><p>docstring规范中最基本的两点：</p>
+<ul>
+<li><p>所有的公共模块、函数、类、方法，都应该写 docstring 。私有方法不一定需要，但应该在 def 后提供一个块注释来说明。</p>
+</li>
+<li><p>docstring 的结束”””应该独占一行，除非此 docstring 只有一行。</p>
+</li>
+</ul>
+<pre><code class="Python">&quot;&quot;&quot;Return a foobar
+Optional do do_something
+&quot;&quot;&quot;
+
+&quot;&quot;&quot;Oneline docstring&quot;&quot;&quot;</code></pre>
+<p>作为文档的Docstring一般出现在模块头部、函数和类的头部，这样在python中可以通过对象的<strong>doc</strong>对象获取文档。编辑器和IDE也可以根据Docstring给出自动提示。</p>
+<ul>
+<li>文档注释以 “”” 开头和结尾, 首行不换行, 如有多行, 末行必需换行, 以下是Google的docstring风格示例</li>
+</ul>
+<pre><code class="Python">&quot;&quot;&quot;Example docstrings
+
+This module demostrates documentation as specified by the `Google Python Style Guide`_. DOcstrings may extend over multiple lines. Sections are with a section header and a colon followed by a block of indented text.
+
+Example:
+  Examples can be given using either the `Example` or `Examples` sections. Sections support any reStructuredText formatiing, including literal blocks::
+
+    $ python example_google.py
+
+Sections breaks are created by resuming unindented text. Sections breaks are also implicitly created anytime a new sections starts
+&quot;&quot;&quot;</code></pre>
+<ul>
+<li>不要在文档注释复制函数定义原型, 而是具体描述其具体内容, 解释具体参数和返回值等</li>
+</ul>
+<pre><code class="Python">#  不推荐的写法(不要写函数原型等废话)
+def function(a, b):
+    &quot;&quot;&quot;function(a, b) -&gt; list&quot;&quot;&quot;
+    ... ...
+
+#  正确的写法
+def function(a, b):
+    &quot;&quot;&quot;计算并返回a到b范围内数据的平均值&quot;&quot;&quot;</code></pre>
+<ul>
+<li>对函数参数、返回值等的说明采用numpy标准, 如下所示</li>
+</ul>
+<pre><code class="Python">def func(arg1, arg2):
+  &quot;&quot;&quot;Summary of the function
+  Detailed description
+
+  Argument
+  ---------
+  arg1 : int
+    detailed for arg1
+  arg2 : int
+    details for arg2
+
+  Return
+  ---------
+  int
+    details
+
+  Reference
+  ---------
+  otherfunc: 其他关联函数
+
+  Demo
+  ---------
+  示例使用doctest格式, 在`&gt;&gt;&gt;`后的代码可以被文档测试工具作为测试用例自动运行
+
+  &gt;&gt;&gt; a = [1, 2, 3]
+  &gt;&gt;&gt; ans = [x + 3 for x in a]
+  &gt;&gt;&gt; print(ans)
+  [4, 5, 6]
+  &quot;&quot;&quot;</code></pre>
+<p>文档注释不限于中英文, 但不要中英文混用</p>
+<p>文档注释不是越长越好, 通常一两句话能把情况说清楚即可</p>
+<ul>
+<li>模块、公有类、公有方法, 能写文档注释的, 应该尽量写文档注释</li>
+</ul>
+<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><h3 id="块注释"><a href="#块注释" class="headerlink" title="块注释"></a>块注释</h3><p>#后空一格， 段落用空行分开，英文开头大写</p>
+<pre><code class="Python"># Block comment
+# Block comment
+#
+# Block comment</code></pre>
+<h3 id="行注释"><a href="#行注释" class="headerlink" title="行注释"></a>行注释</h3><p>至少使用两个空格和语句分开，注意不要使用无意义的注释</p>
+<pre><code class="Python"># 正确的写法
+x = x + 1  # 边框加粗一个像素
+
+# 不推荐的写法(无意义的注释)
+x = x + 1 # x加1</code></pre>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>在代码的关键部分(或比较复杂的地方), 能写注释的要尽量写注释</p>
+<p>比较重要的注释段, 使用多个等号隔开, 可以更加醒目, 突出重要性</p>
+<pre><code class="Python">app = create_app(name, options)
+
+# ========================
+# Please don&#39;t add other feature here
+# ========================
+
+if __name__ == &#39;__main__&#39;:
+  app.run()</code></pre>
+<h2 id="命名规范"><a href="#命名规范" class="headerlink" title="命名规范"></a>命名规范</h2><h3 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h3><p>模块尽量使用小写命名，首字母保持小写，尽量不要用下划线(除非多个单词，且数量不多的情况)</p>
+<pre><code class="Python"># Correct
+import decorder
+import html_parser
+
+# Not recommended
+import Decorder</code></pre>
+<h3 id="类名"><a href="#类名" class="headerlink" title="类名"></a>类名</h3><ul>
+<li>类名使用驼峰(CamelCase)命名风格，首字母大写，私有类可用一个下划线开头</li>
+</ul>
+<pre><code class="Python">class Farm():
+  pass
+
+
+class AnimalFarm(Farm):
+  pass
+
+
+class _PrivateFarm(Farm):
+  pass</code></pre>
+<ul>
+<li>将相关的类和顶级函数放在同一个模块里. 不像Java, 没必要限制一个类一个模块</li>
+</ul>
+<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><ul>
+<li>函数名一律小写，如有多个单词，用下划线隔开</li>
+</ul>
+<pre><code class="Python">def run():
+  pass
+
+def run_with_env():
+  pass</code></pre>
+<ul>
+<li>私有函数在函数前加一个下划线_</li>
+</ul>
+<pre><code class="Python">class Person():
+
+  def _private_func():
+    pass</code></pre>
+<h3 id="变量名"><a href="#变量名" class="headerlink" title="变量名"></a>变量名</h3><ul>
+<li>变量名尽量小写, 如有多个单词，用下划线隔开</li>
+</ul>
+<pre><code class="Python">if __name__ == &#39;__main__&#39;:
+  count = 0
+  school_name = &#39;&#39;</code></pre>
+<h3 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h3><p>常量采用全大写，如有多个单词，使用下划线隔开</p>
+<pre><code class="Python">MAX_CLIENT = 100
+MAX_CONNECTION = 1000
+CONNECTION_TIMEOUT = 600</code></pre>
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                
+                  <span>
+                <i class="iconfont icon-tag"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%A7%84%E8%8C%83/">规范</a>
+                    
+                  </span>
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/06/30/Python%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/">
+                        <i class="fa fa-chevron-left"></i>
+                        <span class="hidden-mobile">Python单元测试</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2020/06/03/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
+                        <span class="hidden-mobile">动态规划</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="fa fa-chevron-right"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+      var tocLimMax = 2 * boardTop + boardCtn.height();
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = boardCtn.css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Python语法规范&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
