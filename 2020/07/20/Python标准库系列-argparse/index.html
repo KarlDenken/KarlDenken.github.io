@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="危楼高百尺，手可摘星辰">
+  <meta name="author" content="Karl">
+  <meta name="keywords" content="">
+  <title>Python标准库系列-argparse - Karl的A78654星云</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Karl的A78654星云</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期一, 七月 20日 2020, 2:25 下午
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    1.5k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      6 分钟
+                  </span>
+                
+
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <h1 id="Python标准库系列-argparse"><a href="#Python标准库系列-argparse" class="headerlink" title="Python标准库系列-argparse"></a>Python标准库系列-argparse</h1><p>Python 3提供了一系列标准库，所提供的组件设计范围十分广泛。这个标准库包含了多个内置模块（以C编写），Python可以依靠这些标准库提供许多系统级功能，例如文件I/O，此外还有大量以Pyhon编写的模块，提供了许多日常编程中许多问题的标准解决方案。具体的列表可以点击<a href="https://docs.python.org/zh-cn/3.7/library/index.html" target="_blank" rel="noopener">Python标准库</a>了解。</p>
+<p>今天提供的就是<code>argparse</code>这个标准库的使用说明</p>
+<h2 id="argparse"><a href="#argparse" class="headerlink" title="argparse"></a>argparse</h2><p>在命令行内，我们调用一个函数，一般会有函数名，位置参数和可选参数。比如<code>ls</code>指令</p>
+<pre><code class="shell">ls
+ls directory
+ls -l
+ls --help</code></pre>
+<p>其中<code>directory</code>就是位置参数，<code>-l</code>就是可选参数，以及一个帮助的<code>--help</code>参数</p>
+<h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><p>先从一个最简单的例子开始</p>
+<pre><code class="Python">import argparse
+parser = argparse.ArgumentParser()
+parser.parse_args()</code></pre>
+<p>下面是代码运行结果</p>
+<pre><code class="shell">$ python3 prog.py
+$ python3 prog.py --help
+usage: prog.py [-h]
+
+optional arguments:
+  -h, --help  show this help message and exit
+$ python3 prog.py --verbose
+usage: prog.py [-h]
+prog.py: error: unrecognized arguments: --verbose
+$ python3 prog.py foo
+usage: prog.py [-h]
+prog.py: error: unrecognized arguments: foo</code></pre>
+<p>程序运行情况如下：</p>
+<ul>
+<li><p>在没有任何选项的情况下运行脚本不会在标准输出显示任何内容。这没有什么用处<br>。</p>
+</li>
+<li><p>第二行代码开始展现出<code>argparse</code>模块的作用。我们几乎什么也没有做，但已经得到一条很好的帮助信息。</p>
+</li>
+<li><p><code>--help</code>选项，也可缩写为<code>-h</code>，是唯一一个可以直接使用的选项（即不需要指定该选项的内容）。指定任何内容都会导致错误。即便如此，我们也能直接得到一条有用的用法信息。</p>
+</li>
+</ul>
+<p>接下来我们来分别探究位置参数和可选餐具</p>
+<h3 id="位置参数"><a href="#位置参数" class="headerlink" title="位置参数"></a>位置参数</h3><p>位置参数的添加只需要添加指代信息就可以了。比如</p>
+<pre><code class="python">import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument(&#39;echo&#39;, help=&quot;echo the string you use here&quot;)
+args = parser.parse_args()
+print(args.echo)</code></pre>
+<p>help可以做出系统提示，便于对参数含义的推断</p>
+<p>这时候运行<code>prog.py</code>·就必须提供一个参数作为<code>echo</code>的值，不然系统就好提示报错</p>
+<pre><code class="shell">$ python3 prog.py
+usage: prog.py [-h] echo
+prog.py: error: the following arguments are required: echo
+
+$ python3 prog.py foo
+foo</code></pre>
+<blockquote>
+<p>  参数的输入默认都是字符串形式，需要修改的可以用type指明</p>
+<pre><code class="python3">parser.add_argument(&quot;square&quot;, help=&quot;display a square of a given number&quot;,type=int)</code></pre>
+</blockquote>
+<h3 id="可选参数"><a href="#可选参数" class="headerlink" title="可选参数"></a>可选参数</h3><p>可选参数有两种。一种是指定一个参数，一种是只需要知道True/False。我们也分别有两种方法</p>
+<h4 id="指定参数"><a href="#指定参数" class="headerlink" title="指定参数"></a>指定参数</h4><p>我们需要添加一个<code>--verbosity</code>的参数，并希望函数打印出来</p>
+<pre><code class="python">import argparse  
+parser = argparse.ArgumentParse()
+parser.add_argument(&#39;--verbosity&#39;, help=&#39;increse output verbosity&#39;)
+args = parser.parse_args()
+if args.verbosity:
+  print(args.verbosity)</code></pre>
+<p>这种类型的参数必须指定一个值，不然就会报错。如果不添加这个参数，这个变量就是<code>None</code>，所以可以判断逻辑真假。如果指定了任何值，逻辑判断都会是真。</p>
+<h4 id="二元参数"><a href="#二元参数" class="headerlink" title="二元参数"></a>二元参数</h4><p>很多时候我们希望只有真/假两个参数，这时我们可以这样写代码</p>
+<pre><code class="python">import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument(&#39;--verbose&#39;, help=&#39;show output verbosity&#39;, action=&#39;store_true&#39;)
+args = parser.parse_args()
+if args.verbose:
+  print(&#39;verbosity turned on&#39;)</code></pre>
+<p>这种情况下，选项更多的是一个标志，而非接受一个值。这就意味着，当选项存在时，<code>args.verbose</code>就是真，否则隐式的赋值为假。这时如果指定值，就会报错。</p>
+<h3 id="进阶操作"><a href="#进阶操作" class="headerlink" title="进阶操作"></a>进阶操作</h3><p>现在我们已经看到了基本的参数设置。接下来我们来一些进阶操作</p>
+<h4 id="短选项"><a href="#短选项" class="headerlink" title="短选项"></a>短选项</h4><p>有时我们的可选参数命名太长，我们可以用首字母或缩写来提供短选项。</p>
+<pre><code class="python">parser.add_argument(&quot;-v&quot;, &quot;--verbose&quot;, help=&quot;increase output verbosity&quot;,action=&quot;store_true&quot;)</code></pre>
+<h4 id="控制可以接受的值"><a href="#控制可以接受的值" class="headerlink" title="控制可以接受的值"></a>控制可以接受的值</h4><p>我们可以提供可以接受的值范围来使得我们的程序不至于运算错误</p>
+<pre><code class="python">parser.add_argument(&quot;-v&quot;, &quot;--verbosity&quot;, type=int, choices=[0, 1, 2], help=&quot;increase output verbosity&quot;)</code></pre>
+<h4 id="通过重复使用来计数"><a href="#通过重复使用来计数" class="headerlink" title="通过重复使用来计数"></a>通过重复使用来计数</h4><p><code>argparse</code>还提供了count功能，这样每一次使用一次可选参数，这个参数的值就+1。但是 <strong>如果不使用，该参数为None</strong></p>
+<pre><code class="python">parser.add_argument(&quot;-v&quot;, &quot;--verbosity&quot;, action=&quot;count&quot;,help=&quot;increase output verbosity&quot;)</code></pre>
+<p>可以用<code>default</code>来解决这个问题</p>
+<pre><code class="python">parser.add_argument(&quot;-v&quot;, &quot;--verbosity&quot;, action=&quot;count&quot;, default=0,help=&quot;increase output verbosity&quot;)</code></pre>
+<h4 id="矛盾选项"><a href="#矛盾选项" class="headerlink" title="矛盾选项"></a>矛盾选项</h4><p><code>add_mutually_exclusive_group()</code>它允许我们指定彼此相互冲突的选项。 让我们再更改程序的其余部分以便使用新功能更有意义：我们将引入 –quiet 选项，它将与 –verbose 正好相反。这用就不能同时使用两者。</p>
+<pre><code class="python">import argparse
+
+parser = argparse.ArgumentParser()
+group = parser.add_mutually_exclusive_group()
+group.add_argument(&quot;-v&quot;, &quot;--verbose&quot;, action=&quot;store_true&quot;)
+group.add_argument(&quot;-q&quot;, &quot;--quiet&quot;, action=&quot;store_true&quot;)</code></pre>
+<h4 id="描述功能"><a href="#描述功能" class="headerlink" title="描述功能"></a>描述功能</h4><p>可以在一开始就把程序的目的写清楚</p>
+<pre><code class="python">import argparse
+
+parser = argparse.ArgumentParser(description=&quot;calculate X to the power of Y&quot;)
+group = parser.add_mutually_exclusive_group()
+group.add_argument(&quot;-v&quot;, &quot;--verbose&quot;, action=&quot;store_true&quot;)
+group.add_argument(&quot;-q&quot;, &quot;--quiet&quot;, action=&quot;store_true&quot;)
+parser.add_argument(&quot;x&quot;, type=int, help=&quot;the base&quot;)
+parser.add_argument(&quot;y&quot;, type=int, help=&quot;the exponent&quot;)
+args = parser.parse_args()
+answer = args.x**args.y
+
+if args.quiet:
+    print(answer)
+elif args.verbose:
+    print(&quot;{} to the power {} equals {}&quot;.format(args.x, args.y, answer))
+else:
+    print(&quot;{}^{} == {}&quot;.format(args.x, args.y, answer))</code></pre>
+<p>这用如果我们不清楚程序的使用方法，我们可以用<code>-h</code>得到使用文档</p>
+<pre><code class="shell">$ python3 prog.py --help
+usage: prog.py [-h] [-v | -q] x y
+
+calculate X to the power of Y
+
+positional arguments:
+  x              the base
+  y              the exponent
+
+optional arguments:
+  -h, --help     show this help message and exit
+  -v, --verbose
+  -q, --quiet</code></pre>
+<h2 id="常见使用方法"><a href="#常见使用方法" class="headerlink" title="常见使用方法"></a>常见使用方法</h2><p>一般<code>argparse</code>会在<code>__name__==&quot;__main__&quot;</code>中使用。将<code>args</code>传给<code>main(args)</code>函数，使得结构逻辑和数据分开来。但是如果配置较多较复杂，建议使用其他的配置文件，比如YAML文件来配置深度学习网络的一些参数</p>
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                
+                  <span>
+                <i class="iconfont icon-tag"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Python%E6%A0%87%E5%87%86%E5%BA%93%E7%B3%BB%E5%88%97/">Python标准库系列</a>
+                    
+                  </span>
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/08/11/Python%E6%A0%87%E5%87%86%E5%BA%93%E7%B3%BB%E5%88%97-glob/">
+                        <i class="fa fa-chevron-left"></i>
+                        <span class="hidden-mobile">Python标准库系列-glob</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2020/07/17/Python%E6%A0%87%E5%87%86%E5%BA%93%E7%B3%BB%E5%88%97-heapq/">
+                        <span class="hidden-mobile">Python标准库系列-heapq</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="fa fa-chevron-right"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+      var tocLimMax = 2 * boardTop + boardCtn.height();
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = boardCtn.css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Python标准库系列-argparse&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

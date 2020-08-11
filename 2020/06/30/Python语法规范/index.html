@@ -285,6 +285,12 @@ def complex(real, imag=0.0):
 def complex(real, imag = 0.0):
   pass</code></pre>
 <ul>
+<li>在list，dict中选择时，按照可读性，不要在+1的中间添加不必要的空格，使得代码可读性下降，也可以把它看作参数输入</li>
+</ul>
+<pre><code class="Python">dic = {}
+dic[n] = 1
+return dic[dic[i]+1]</code></pre>
+<ul>
 <li>左括号之后，右括号之前不要添加不必要的空格</li>
 </ul>
 <pre><code class="Python"># Correct
